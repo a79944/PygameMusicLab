@@ -1,12 +1,19 @@
 import os
 import json
+import sys
 import pygame
 from config import *
 
 class SaveManager:
     def __init__(self):
-        self.folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "saves")
+        if getattr(sys, 'frozen', False):
+            base_path = os.path.dirname(sys.executable)
+        else:
+            base_path = os.path.dirname(os.path.abspath(__file__))
+
+        self.folder = os.path.join(base_path, "saves")
         os.makedirs(self.folder, exist_ok=True)
+
         self.active = False
         self.mode = None
         self.slot_buttons = []
@@ -55,7 +62,7 @@ class SaveManager:
     def load_from_slot(self, slot_num, grid):
         path = os.path.join(self.folder, f"slot{slot_num}.json")
         if os.path.exists(path):
-            print(path)
+            #(path)
             with open(path, "r") as f:
                 data = json.load(f)
             grid.cells = data.get("cells", grid.cells)

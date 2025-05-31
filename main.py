@@ -1,4 +1,5 @@
 import pygame
+import sys
 from config import *
 from grid import Grid
 from sound_manager import SoundManager
@@ -94,7 +95,7 @@ while True:
             continue
         if event.type == pygame.QUIT:
             pygame.quit()
-            exit()
+            sys.exit()
 
         elif event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             x, y = pygame.mouse.get_pos()
