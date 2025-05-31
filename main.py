@@ -112,9 +112,15 @@ while True:
                     rect = pygame.Rect(x_btn, SCREEN_HEIGHT - HUD_HEIGHT + 20, 100, 40)
                     if rect.collidepoint(x, y):
                         if label == "Play":
-                            is_playing = True
-                            play_col = start_col_marker if start_col_marker is not None else 0
-                            last_play_time = pygame.time.get_ticks()
+                            if is_playing:
+                                is_playing = False
+                                if hasattr(sound_manager, "previous_notes"):
+                                    sound_manager.stop_notes(sound_manager.previous_notes)
+                                    sound_manager.previous_notes = []
+                            else:
+                                is_playing = True
+                                play_col = start_col_marker if start_col_marker is not None else 0
+                                last_play_time = pygame.time.get_ticks()
                         elif label == "Clear":
                             grid.clear_all()
                         elif label == "Save":
@@ -199,9 +205,15 @@ while True:
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                is_playing = True
-                play_col = start_col_marker if start_col_marker is not None else 0
-                last_play_time = pygame.time.get_ticks()
+                if is_playing:
+                    is_playing = False
+                    if hasattr(sound_manager, "previous_notes"):
+                        sound_manager.stop_notes(sound_manager.previous_notes)
+                        sound_manager.previous_notes = []
+                else:
+                    is_playing = True
+                    play_col = start_col_marker if start_col_marker is not None else 0
+                    last_play_time = pygame.time.get_ticks()
 
             elif event.key == pygame.K_UP and start_row > 0:
                 start_row -= 1
