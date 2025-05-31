@@ -1,6 +1,6 @@
-# Python Music Lab
+# Pygame Music Lab
 
-**Python Music Lab** is a music sequencer inspired by chrome's music lab, made with python using `pygame`. Users can create songs by activating cells that represent notes in a grid. The tool allows saving/loading patterns, picking the start location of the playback and adjusting tempo.
+**Pygame Music Lab** is a music sequencer inspired by chrome's music lab, made with python using `pygame`. Users can create songs by activating cells that represent notes in a grid. The tool allows saving/loading patterns, picking the start location of the playback and adjusting tempo.
 
 ---
 
