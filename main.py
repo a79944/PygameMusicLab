@@ -163,12 +163,12 @@ while True:
                 continue
 
             col = x // CELL_WIDTH + start_col
-            row = y // CELL_HEIGHT + start_row
+            row = TOTAL_ROWS - 1 - (y // CELL_HEIGHT + start_row)
             if 0 <= row < TOTAL_ROWS and 0 <= col < TOTAL_COLS:
                 grid.toggle_cell(row, col)
 
                 if grid.cells[row][col]:
-                    note_index = TOTAL_ROWS - 1 - row
+                    note_index = row
                     sound_manager.play_single_note(note_index)
                     sound_manager.previous_notes = [sound_manager.notes[note_index].midi_number]
                     if hasattr(sound_manager, "previous_notes"):
@@ -231,7 +231,7 @@ while True:
         if now - last_play_time >= play_delay:
             if hasattr(sound_manager, "previous_notes"):
                 sound_manager.stop_notes(sound_manager.previous_notes)
-            column_cells = [grid.cells[TOTAL_ROWS - 1 - row][play_col] for row in range(TOTAL_ROWS)]
+            column_cells = [grid.cells[row][play_col] for row in range(TOTAL_ROWS)]
 
             next_col = play_col + 1
 

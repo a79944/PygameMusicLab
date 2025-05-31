@@ -1,7 +1,7 @@
 import pygame.midi
 from note import Note
 
-NOTE_NAMES = ['a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#']
+NOTE_NAMES = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b']
 
 def name_to_midi(note_name: str) -> int:
     name = note_name[:-1].lower()

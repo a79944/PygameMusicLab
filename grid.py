@@ -10,12 +10,14 @@ class Grid:
         self.cells[row][col] = not self.cells[row][col]
 
     def draw(self, surface, start_row, start_col, visible_rows, visible_cols):
+        font = pygame.font.SysFont(None, 16)
+
         for row in range(visible_rows):
             if (start_row + row) % 12 == 0:
                 pygame.draw.line(surface, (255, 255, 255), (0, row * CELL_HEIGHT),
                                  (visible_cols * CELL_WIDTH, row * CELL_HEIGHT), 2)
             for col in range(visible_cols):
-                grid_row = start_row + row
+                grid_row = TOTAL_ROWS - 1 - (start_row + row)
                 grid_col = start_col + col
                 if grid_row >= TOTAL_ROWS or grid_col >= TOTAL_COLS:
                     continue
@@ -30,20 +32,21 @@ class Grid:
 
                 pygame.draw.rect(surface, color, rect)
 
-                if '#' in note_name:
-                    overlay = pygame.Surface((CELL_WIDTH, CELL_HEIGHT), pygame.SRCALPHA)
-                    overlay.fill((0, 0, 0, 100))
-                    surface.blit(overlay, rect.topleft)
-
-                    font = pygame.font.SysFont(None, 16)
-                    sharp_text = font.render('#', True, (255, 255, 255))
-                    surface.blit(sharp_text, (rect.x + CELL_WIDTH - 12, rect.y + 2))
+                label_text = font.render(note_name.upper(), True, (255, 255, 255))
+                text_rect = label_text.get_rect()
+                text_x = rect.right - text_rect.width - 2
+                text_y = rect.y + 2
+                surface.blit(label_text, (text_x, text_y))
 
                 pygame.draw.rect(surface, (200, 200, 200), rect, 1)
 
     def get_note_name_for_row(self, row_index):
-        note_index = row_index % 12
+        midi_number = self.get_midi_number_for_row(row_index)
+        note_index = midi_number % 12
         return NOTE_NAMES[note_index]
+
+    def get_midi_number_for_row(self, row_index):
+        return 24 + row_index
 
     def clear_all(self):
         for row in range(TOTAL_ROWS):
